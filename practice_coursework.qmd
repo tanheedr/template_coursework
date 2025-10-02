@@ -10,7 +10,12 @@ format:
 format-links: false
 ---
 
+```{r, echo = False}
+#| warning: false
+library(palmerpenguins)
+library(tidyverse)
+```
+
 #Using the palmer analysis
 
-Some analysis on palmer penguins was done on 01/10/25 and it will be shared here
-
+Some analysis on palmer penguins was done on 01/10/25 and it will be shared here.
