@@ -19,6 +19,8 @@ Some analysis on palmer penguins was done on 01/10/25 and it will be shared here
 library(palmerpenguins)
 library(tidyverse)
 library(ggplot2)
+library(knitr)
+library(kableExtra)
 
 penguins <- palmerpenguins::penguins
 ```
@@ -27,12 +29,16 @@ penguins <- palmerpenguins::penguins
 
 The first task is to adapt the data frame by adding an additional column indicating if there is any missing data.
 
-The before and after of the `penguins` data frame look like this:
+The adjusted `penguins` data frame look like this:
 
 ```{r, echo = FALSE}
-penguins
+#| label: penguinsTable
+#| tbl-cap: The `penguins` data frame
+
 penguins$any_missing_values <- apply(X = penguins, MARGIN = 1, FUN = anyNA)
-penguins
+knitr::kable(penguins[1:6,c(1,3,9)],
+             align=rep('c', 3),
+             col.names = c("Species", "Bill length (mm)", "Missing values"))
 ```
 
 ## Task 2
@@ -43,7 +49,9 @@ The second task is to compute the average bill and flipper length. From this, we
 mean_by_species <- aggregate(cbind(bill_length_mm, flipper_length_mm) ~ species,
                              data = penguins,
                              FUN = function(x) mean(x, na.rm = TRUE))
-mean_by_species
+knitr::kable(mean_by_species,
+             align=rep('c', 3),
+             col.names = c("Species", "Bill length (mm)", "Flipper length (mm)"))
 ```
 
 Alongside this, we also aim to create the general function `species_mean(df, var)` which calculates the mean of a numeric or integer variable for each species. The code for which, looks like the following:
@@ -57,7 +65,12 @@ species_mean <- function(df, var){
   by_spec
 }
 spec_mean <- species_mean(penguins, "bill_length_mm")
-spec_mean
+```
+
+```{r, echo = FALSE}
+knitr::kable(spec_mean,
+             align=rep('c', 2),
+             col.names = c("Species", "Mean bill length (mm)"))
 ```
 
 ## Task 3
@@ -65,17 +78,20 @@ spec_mean
 The final task is to create a scatter plot of flipper length vs body mass, differentiated by species. In the figures below, the average for each species is represented in black.
 
 ```{r, echo = FALSE}
+#| warning: false
+
 flipper_means <- aggregate(cbind(flipper_length_mm, body_mass_g) ~ species,
                              data = penguins,
                              FUN = function(x) mean(x, na.rm = TRUE))
-flipper_means
 
-ggplot(penguins, aes(x = flipper_length_mm,
-                     y = body_mass_g,
-                     color = as.factor(species),
-                     shape = as.factor(species))) +
+graph <- ggplot(penguins, aes(x = flipper_length_mm,
+                               y = body_mass_g,
+                               color = as.factor(species),
+                               shape = as.factor(species))) +
   geom_point(size = 2) +
-  geom_point(flipper_means, mapping = aes(x = flipper_length_mm,  y = body_mass_g),
+  labs(x = "Flipper length (mm)", y = "Body mass (g)") +
+  labs()
+graph + geom_point(flipper_means, mapping = aes(x = flipper_length_mm,  y = body_mass_g),
              color = "black",
              size = 5,
              show.legend = FALSE)
