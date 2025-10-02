@@ -1,2 +1,2 @@
 # template_coursework
-Example of courseworl in quarto
+Example of coursework in quarto
