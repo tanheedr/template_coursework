@@ -12,10 +12,37 @@ format-links: false
 
 ```{r, echo = False}
 #| warning: false
-library(palmerpenguins)
-library(tidyverse)
+library('palmerpenguins')
+library('tidyverse')
 ```
 
 #Using the palmer analysis
 
 Some analysis on palmer penguins was done on 01/10/25 and it will be shared here.
+
+```{r, echo = False}
+penguins <- palmerpenguins::penguins
+```
+
+##Task 1
+
+The first task is to adapt the data frame by adding an additional column indicating if there is any missing data.
+
+The before and after of the `{r}penguins` data frame look like this:
+
+```{r, echo = False}
+penguins
+penguins$any_missing_values <- apply(X = penguins, MARGIN = 1, FUN = anyNA)
+penguins
+```
+
+##Task 2
+
+The second task is to compute the average bill and flipper length. From this, we get the following data:
+
+```{r, echo = False}
+mean_by_species <- aggregate(cbind(bill_length_mm, flipper_length_mm) ~ species,
+                             data = penguins,
+                             FUN = function(x) mean(x, na.rm = TRUE))
+mean_by_species
+```
