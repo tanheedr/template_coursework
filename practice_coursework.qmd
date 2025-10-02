@@ -10,7 +10,7 @@ format:
 format-links: false
 ---
 
-```{r, echo = False}
+```{r, echo = FALSE}
 #| warning: false
 library(palmerpenguins)
 library(tidyverse)
@@ -21,7 +21,7 @@ library(ggplot2)
 
 Some analysis on palmer penguins was done on 01/10/25 and it will be shared here.
 
-```{r, echo = False}
+```{r, echo = FALSE}
 penguins <- palmerpenguins::penguins
 ```
 
@@ -31,7 +31,7 @@ The first task is to adapt the data frame by adding an additional column indicat
 
 The before and after of the `{r}penguins` data frame look like this:
 
-```{r, echo = False}
+```{r, echo = FALSE}
 penguins
 penguins$any_missing_values <- apply(X = penguins, MARGIN = 1, FUN = anyNA)
 penguins
@@ -41,7 +41,7 @@ penguins
 
 The second task is to compute the average bill and flipper length. From this, we get the following data:
 
-```{r, echo = False}
+```{r, echo = FALSE}
 mean_by_species <- aggregate(cbind(bill_length_mm, flipper_length_mm) ~ species,
                              data = penguins,
                              FUN = function(x) mean(x, na.rm = TRUE))
@@ -66,7 +66,7 @@ spec_mean
 
 The final task is to create a scatter plot of flipper length vs body mass, differentiated by species. In the figures below, the average for each species is represented in black.
 
-```{r, echo = False}
+```{r, echo = FALSE}
 flipper_means <- aggregate(cbind(flipper_length_mm, body_mass_g) ~ species,
                              data = penguins,
                              FUN = function(x) mean(x, na.rm = TRUE))
