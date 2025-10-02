@@ -12,8 +12,9 @@ format-links: false
 
 ```{r, echo = False}
 #| warning: false
-library('palmerpenguins')
-library('tidyverse')
+library(palmerpenguins)
+library(tidyverse)
+library(ggplot2)
 ```
 
 #Using the palmer analysis
@@ -45,4 +46,39 @@ mean_by_species <- aggregate(cbind(bill_length_mm, flipper_length_mm) ~ species,
                              data = penguins,
                              FUN = function(x) mean(x, na.rm = TRUE))
 mean_by_species
+```
+
+Alongside this, we also aim to create the general function `{r}species_mean(df, var)` which calculates the mean of a numeric or integer variable for each species. The code for which, looks like the following:
+
+```{r}
+species_mean <- function(df, var){
+  stopifnot(class(df[[var]]) %in% c("numeric", "integer"))
+  by_spec <- aggregate(df[[var]],
+                       by = list(species = df$species),
+                       FUN = function(x) mean(x, na.rm = TRUE))
+  by_spec
+}
+spec_mean <- species_mean(penguins, "bill_length_mm")
+spec_mean
+```
+
+##Task 3
+
+The final task is to create a scatter plot of flipper length vs body mass, differentiated by species. In the figures below, the average for each species is represented in black.
+
+```{r, echo = False}
+flipper_means <- aggregate(cbind(flipper_length_mm, body_mass_g) ~ species,
+                             data = penguins,
+                             FUN = function(x) mean(x, na.rm = TRUE))
+flipper_means
+
+ggplot(penguins, aes(x = flipper_length_mm,
+                     y = body_mass_g,
+                     color = as.factor(species),
+                     shape = as.factor(species))) +
+  geom_point(size = 2) +
+  geom_point(flipper_means, mapping = aes(x = flipper_length_mm,  y = body_mass_g),
+             color = "black",
+             size = 5,
+             show.legend = FALSE)
 ```
