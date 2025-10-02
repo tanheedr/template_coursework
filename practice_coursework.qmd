@@ -1,0 +1,16 @@
+---
+title: "Practice Coursework"
+author: "Tanheed Rahman"
+format:
+  html:
+    toc: true
+    highlight: tango
+    self-contained: true
+  pdf: default
+format-links: false
+---
+
+#Using the palmer analysis
+
+Some analysis on palmer penguins was done on 01/10/25 and it will be shared here
+

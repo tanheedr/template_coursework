@@ -10,6 +10,7 @@ format:
     df-print: paged
   pdf: default
 format-links: false
+latex-tinytex: false
 bibliography: "MSc_Statistics_coursework_template_quarto.bib" 
 ---
 
