@@ -10,26 +10,24 @@ format:
 format-links: false
 ---
 
+# The palmer analysis
+
+Some analysis on palmer penguins was done on 01/10/25 and it will be shared here.
+
 ```{r, echo = FALSE}
 #| warning: false
 library(palmerpenguins)
 library(tidyverse)
 library(ggplot2)
-```
 
-#Using the palmer analysis
-
-Some analysis on palmer penguins was done on 01/10/25 and it will be shared here.
-
-```{r, echo = FALSE}
 penguins <- palmerpenguins::penguins
 ```
 
-##Task 1
+## Task 1
 
 The first task is to adapt the data frame by adding an additional column indicating if there is any missing data.
 
-The before and after of the `{r}penguins` data frame look like this:
+The before and after of the `penguins` data frame look like this:
 
 ```{r, echo = FALSE}
 penguins
@@ -37,7 +35,7 @@ penguins$any_missing_values <- apply(X = penguins, MARGIN = 1, FUN = anyNA)
 penguins
 ```
 
-##Task 2
+## Task 2
 
 The second task is to compute the average bill and flipper length. From this, we get the following data:
 
@@ -48,7 +46,7 @@ mean_by_species <- aggregate(cbind(bill_length_mm, flipper_length_mm) ~ species,
 mean_by_species
 ```
 
-Alongside this, we also aim to create the general function `{r}species_mean(df, var)` which calculates the mean of a numeric or integer variable for each species. The code for which, looks like the following:
+Alongside this, we also aim to create the general function `species_mean(df, var)` which calculates the mean of a numeric or integer variable for each species. The code for which, looks like the following:
 
 ```{r}
 species_mean <- function(df, var){
@@ -62,7 +60,7 @@ spec_mean <- species_mean(penguins, "bill_length_mm")
 spec_mean
 ```
 
-##Task 3
+## Task 3
 
 The final task is to create a scatter plot of flipper length vs body mass, differentiated by species. In the figures below, the average for each species is represented in black.
 
